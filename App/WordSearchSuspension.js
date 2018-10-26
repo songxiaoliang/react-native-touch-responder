@@ -51,16 +51,16 @@ export default class WordSearchSuspension extends PureComponent {
             onPanResponderReject: (evt, gestureState) => {
             },
             onPanResponderGrant: (evt, gestureState) => {
-                let word = this.getWord(gestureState.y0);
-                this.props.showWordDialog && this.props.showWordDialog(word);
+                const { index, word }  = this.getWord(gestureState.y0);
+                this.props.showWordDialog && this.props.showWordDialog(index, word);
                 this.changeBgColor(this.refs.wordContainer, 'rgba(0,0,0,0.3)');
             },
             onPanResponderStart:(evt, gestureState) => {
             },
             onPanResponderMove:(evt, gestureState) => {
                 // 获取当前滑动到的位置，根据当前位置，取出index 对应 word
-                let word = this.getWord(gestureState.moveY);
-                this.props.showWordDialog && this.props.showWordDialog(word);
+                const { index, word } = this.getWord(gestureState.moveY);
+                this.props.showWordDialog && this.props.showWordDialog(index, word);
             },
             onPanResponderEnd:(evt, gestureState) => {
             },
@@ -84,7 +84,7 @@ export default class WordSearchSuspension extends PureComponent {
         } else if (pressIndex >= WORDS.length) {
             pressIndex = WORDS.length - 1;
         }
-        return WORDS[pressIndex];
+        return { index: pressIndex, word: WORDS[pressIndex] };
     }
 
     /**
